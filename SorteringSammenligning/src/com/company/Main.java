@@ -1,7 +1,5 @@
 package com.company;
-
 import jsjf.CircularArrayQueue;
-
 import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Random;
@@ -20,33 +18,27 @@ public class Main {
         int min = 0;
         int max = n;
         int[] tall = new int[max];
-        Random randomNum = new Random();
-
+        Random randomNum = new Random();     
         for(int i = 0; i< max; i++){
             tall[i] = randomNum.nextInt(max*2);
-
         }
         System.out.println("What sorting method would you like to use? Type 1 for insertion, 2 for merge, 3 for radix and 4 for quick");
         selectedMethod = sc.nextInt();
         System.out.println("Type 1 to execute sort or 2 to get an estimated C value");
         methodType = sc.nextInt();
-
         if(methodType == 2){
             estimate(tall, min, max);
         }
         else if(methodType == 1){
-
-
             time = System.currentTimeMillis();
             runSort(tall, min, max);
             time = System.currentTimeMillis() - time;
             System.out.println("Runtime: " +time+ " ms");
-
         }
         System.out.println("");
         System.out.println("//////////////////////////////////////////////////////////////////////////////////");
         System.out.println("Enter 1 to run again or any other character/number to stop the program ");
-        runCheck = sc.nextInt();
+        runCheck = sc.nextInt();        
         if(runCheck == 1){
             main(args);
         }
@@ -56,13 +48,10 @@ public class Main {
         switch (selectedMethod){
             case 1: estimateInsertion(tall);
             break;
-
             case 2: estimateMerge(tall, min, max-1);
             break;
-
             case 3: estimateRadix(tall, (int)Math.log10(max)+1);
             break;
-
             case 4: estimateQuick(tall, min, max-1);
             break;
         }
@@ -72,14 +61,12 @@ public class Main {
         switch (selectedMethod){
             case 1: insertionSort(tall);
                 break;
-
             case 2: mergeSort(tall, min, max-1);
                 break;
-
             case 3: radixSort(tall, (int)Math.log10(max)+1);
                 break;
-
             case 4: quickSort(tall, min, max-1);
+                break;
         }
     }
 
@@ -88,7 +75,7 @@ public class Main {
         double time = System.currentTimeMillis();
         quickSort(tall, min, max);
         time = System.currentTimeMillis() - time;
-        double sum = 0;
+        double sum = 0;       
         for(int i = n; i<=n*10;i+=n){
             sum += time/workload;
         }
@@ -146,8 +133,8 @@ public class Main {
             // A er sortert t.o.m. indeks i-1
             key = A[i];
             int j = i;
-            // Setter element nummer i pÃ¥ riktig plass
-            // blant de i-1 fÃ¸rste elementene
+            // Setter element nummer i på riktig plass
+            // blant de i-1 første elementene
             while (j > 0 && A[j-1] > key)
             {
                 A[j] = A[j-1];
@@ -200,10 +187,8 @@ public class Main {
         {
             // Partisjonerer array
             indexofpartition = findPartition(A, min, max);
-
             // Sorterer venstre del
             quickSort(A, min, indexofpartition - 1);
-
             // Sorterer hÃ¸yre del
             quickSort(A, indexofpartition + 1, max);
         }
@@ -216,9 +201,9 @@ public class Main {
         partitionelement = A[min];
         left = min;
         right = max;
-        // GjÃ¸r selve partisjoneringen
+        // Gjør selve partisjoneringen
         while (left < right) {
-            // Finn et element som er stÃ¸rre enn part.elementet
+            // Finn et element som er stærre enn part.elementet
             while (A[left] <= partitionelement && left < right)
                 left++;
             // Finn et element som er mindre enn part.elementet
@@ -240,26 +225,26 @@ public class Main {
     }
 
 //////////////////////////////////////////////radixSort/////////////////////////////////////////////////////////77
-        public static void radixSort(int a[], int maksAntSiffer)
-        {
-            // Radixsortering av en array a med desimale heltall
-            // maksAntSiffer: Maksimalt antall siffer i tallene
-            int ti_i_m = 1; // Lagrer 10^m
-            int n = a.length;
-            // Oppretter 10 tomme kÃ¸er
-            CircularArrayQueue<Integer>[] Q = (CircularArrayQueue<Integer>[])(new CircularArrayQueue[10]);
-            for (int i = 0; i < 10; i++)
-                Q[i] = new CircularArrayQueue<Integer>();
-            // Sorterer pÃ¥ et og et siffer, fra venstre mot hÃ¸yre
-           for (int m = 0; m < maksAntSiffer; m++)
-            {
+     public static void radixSort(int a[], int maksAntSiffer)
+     {
+         // Radixsortering av en array a med desimale heltall
+         // maksAntSiffer: Maksimalt antall siffer i tallene
+         int ti_i_m = 1; // Lagrer 10^m
+         int n = a.length;
+         // Oppretter 10 tomme kÃ¸er
+         CircularArrayQueue<Integer>[] Q = (CircularArrayQueue<Integer>[])(new CircularArrayQueue[10]);
+         for (int i = 0; i < 10; i++)
+             Q[i] = new CircularArrayQueue<Integer>();
+             // Sorterer pÃ¥ et og et siffer, fra venstre mot hÃ¸yre
+             for (int m = 0; m < maksAntSiffer; m++)
+             {
                 // Fordeler tallene i 10 kÃ¸er
                 for (int i = 0; i < n; i++)
                 {
                     int siffer = (a[i] / ti_i_m) % 10;
                     Q[siffer].enqueue(a[i]);
                 }
-                // TÃ¸mmer kÃ¸ene og legger tallene fortlÃ¸pende tilbake i a
+                // Tømmer køene og legger tallene fortløpende tilbake i a
                 int j = 0;
                 for (int i = 0; i < 10; i++)
                     while (!Q[i].isEmpty())
@@ -268,5 +253,5 @@ public class Main {
                 ti_i_m *= 10;
             }
 
-        }
-}
+         }
+     }
